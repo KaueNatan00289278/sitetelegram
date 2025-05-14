@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando para Telegram</title>
+    <meta name="description" content="Acesse agora nosso canal exclusivo no Telegram e não perca nenhuma novidade!">
+    <link rel="icon" href="https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/icon512@2x.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #229ED9;
+            border-radius: 5px;
+            transition: width 2s linear;
+        }
+        .manual-link {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        .manual-link a {
+            color: #229ED9;
+            text-decoration: none;
+        }
+        .manual-link a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.875rem;
+        }
+    </style>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){
+            if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)
+        }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1604935213547070');
+        fbq('track', 'PageView');
+        fbq('track', 'InitiateCheckout', { content_name: 'telegram_page' });
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" 
+             src="https://www.facebook.com/tr?id=1604935213547070&ev=PageView&noscript=1"/>
+    </noscript>
+</head>
+<body>
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/icon512@2x.png" 
+             alt="Telegram" class="logo">
+        <h1>Redirecionando você</h1>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <p id="countdown">Aguarde apenas 2 segundos...</p>
+        <div class="manual-link">
+            <p>Se você não for redirecionado automaticamente, 
+                <a href="https://t.me/topbotdar2k_bot" id="manual-redirect">clique aqui</a>
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+        © 2024 • Redirecionamento seguro
+    </div>
+
+    <script>
+        const targetUrl = 'https://t.me/topbotdar2k_bot';
+        let countdown = 2;
+        
+        // Atualiza a barra de progresso
+        const progress = document.getElementById('progress');
+        progress.style.width = '0%';
+        setTimeout(() => {
+            progress.style.width = '100%';
+        }, 100);
+
+        // Atualiza o contador
+        const countdownElement = document.getElementById('countdown');
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                fbq('track', 'CompleteRegistration', { content_name: 'telegram_redirect' });
+                window.location.href = targetUrl;
+            } else {
+                countdownElement.textContent = `Aguarde apenas ${countdown} ${countdown === 1 ? 'segundo' : 'segundos'}...`;
+            }
+        }, 1000);
+
+        // Link manual
+        document.getElementById('manual-redirect').addEventListener('click', (e) => {
+            e.preventDefault();
+            fbq('track', 'CompleteRegistration', { content_name: 'telegram_redirect' });
+            window.location.href = targetUrl;
+        });
+    </script>
+</body>
+</html>
