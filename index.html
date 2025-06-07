@@ -1,9 +1,74 @@
-<script>location.replace("https://t.me/atendimentovipb_bot");</script>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirecionando...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando para o Telegram...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
-</body
+    <div class="container">
+        <h1>Redirecionando para o Telegram...</h1>
+        <p>Por favor, aguarde enquanto tentamos conectar você ao nosso bot.</p>
+        <p id="status-message"></p>
+    </div>
+
+    <script>
+        const BOT_PREFIX = "seu_prefixo_bot_telegram_"; // Substitua pelo prefixo real dos seus bots
+        const statusMessageElement = document.getElementById('status-message');
+
+        async function redirectToTelegramBot() {
+            statusMessageElement.textContent = 'Buscando bot ativo...';
+            try {
+                // Chama a Netlify Function. Usamos /api/get-active-bot por causa do redirecionamento no netlify.toml
+                const response = await fetch('/api/get-active-bot'); 
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `Failed to get active bot. Status: ${response.status}`);
+                }
+                const data = await response.json();
+                const botName = data.bot;
+
+                if (botName) {
+                    const botUrl = `https://t.me/<span class="math-inline">\{BOT\_PREFIX\}</span>{botName}`;
+                    statusMessageElement.textContent = `Redirecionando para o bot: ${botName}...`;
+                    window.location.href = botUrl; // Redireciona na mesma aba
+                    // Ou window.open(botUrl, '_blank'); para nova aba
+                } else {
+                    statusMessageElement.textContent = 'No momento, não temos bots ativos. Por favor, tente novamente mais tarde.';
+                }
+            } catch (error) {
+                console.error('Error in redirectToTelegramBot:', error);
+                statusMessageElement.textContent = `Erro ao conectar. Por favor, tente novamente mais tarde. (${error.message})`;
+            }
+        }
+
+        window.onload = redirectToTelegramBot;
+    </script>
+</body>
+</html>
