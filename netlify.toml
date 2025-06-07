@@ -1,0 +1,13 @@
+[build]
+  # Define o diretório onde o Netlify publicará seus arquivos de build (seu HTML, CSS, JS)
+  publish = "." 
+  # Define o diretório onde o Netlify encontrará suas funções serverless
+  functions = "netlify/functions" 
+
+[[redirects]]
+  # Isso é opcional, mas útil para criar uma URL amigável para suas funções
+  # De: a URL que o frontend vai chamar
+  # Para: a URL real da sua função no Netlify
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
